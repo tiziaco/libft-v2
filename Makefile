@@ -6,7 +6,7 @@
 #    By: tiacovel <tiacovel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/20 18:33:34 by tiacovel          #+#    #+#              #
-#    Updated: 2024/01/18 16:57:33 by tiacovel         ###   ########.fr        #
+#    Updated: 2024/03/13 12:15:04 by tiacovel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,24 +26,32 @@ CC				= cc
 RM				= rm -f
 CFLAGS			= -Wall -Wextra -Werror -fPIE
 NAME			= libft.a
+HIDE = @
+
+# ANSI escape codes for colored output
+GREEN			= \033[0;32m
+NC				= \033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(PRINTF_OBJS)
-		$(CC) $(CFLAGS) -c $(SRCS)
-		$(CC) $(CFLAGS) -c $(PRINTF_SRCS)
-		ar rcs $(NAME) $(OBJS) $(PRINTF_OBJS)
+		$(HIDE) ar rcs $(NAME) $(OBJS) $(PRINTF_OBJS)
 
 bonus: $(B_OBJS)
-		$(CC) $(CFLAGS) -c $(B_SRCS)
-		ar rc $(NAME) $(B_OBJS)
+		$(HIDE) $(CC) $(CFLAGS) -c $(B_SRCS) -o $(B_OBJS)
+		$(HIDE) ar rc $(NAME) $(B_OBJS)
+
+%.o: %.c
+		$(HIDE) $(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-		$(RM) $(PRINTF_OBJS) *.o
+		$(HIDE) $(RM) $(PRINTF_OBJS) *.o
+		@echo "\033[0;31mLibft objs removed.\033[0m"
 
 fclean: clean
-		$(RM) $(NAME)
-
+		$(HIDE) $(RM) $(NAME)
+		@echo "\033[0;31mLibft.a removed.\033[0m"
+		
 re: fclean all
 
 .PHONY: all clean fclean re bonus
