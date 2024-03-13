@@ -1,0 +1,8 @@
+# Files
+*.pdf
+*.txt
+*.out
+*.a
+*.o
+*.DS*
+libft
